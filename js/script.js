@@ -40,6 +40,10 @@ function update(event){
     if(event.keyCode == 40 && direction != "up") direction = "down";
 }
 
+function atualizaScore(elemento){
+    document.getElementById("score").innerHTML = elemento;
+}
+
 function iniciarJogo(){
 
     if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
@@ -50,7 +54,12 @@ function iniciarJogo(){
     for(i=1; i < snake.length; i++){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
             clearInterval(jogo);
-            alert('Game Over :(');
+            var restart = confirm('Game Over :(\nReiniciar Jogo?');
+            if(restart == true){
+                window.location.reload();
+            }else{
+                alert("Sua pontuação final foi: " + score);
+            }
         }
     }
 
@@ -73,7 +82,7 @@ function iniciarJogo(){
         food.x = Math.floor(Math.random() * 15 +1) * box,
         food.y = Math.floor(Math.random() * 15 +1) * box,
         score++,
-        console.log(score);
+        atualizaScore(score);
     }
 
     
@@ -85,5 +94,6 @@ function iniciarJogo(){
 
     snake.unshift(newHead);
 }
+
 
 let jogo = setInterval(iniciarJogo,100);
